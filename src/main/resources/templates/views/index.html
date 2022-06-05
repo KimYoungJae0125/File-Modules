@@ -6,11 +6,31 @@
     <link rel="stylesheet" href="/css/file.css">
 </head>
 <body>
-<span onclick="test()">Thymeleaf Index</span>
+<span id="fileIndex">Thymeleaf Index</span>
 <br>
 <br>
-<label for="test" class="file_button">파일 라벨</label>
-<input id="test" type="file" hidden>
+<div class="file-container">
+    <div class="file-wrapper" id="fileWrapper">
+        <ul class="file-info-wrapper">
+            <li>
+                선택
+            </li>
+            <li>
+                파일명
+            </li>
+            <li>
+                사이즈
+            </li>
+        </ul>
+        <div class="file-button-wrapper">
+            <label for="fileAddInput">파일 추가</label>
+            <button id="fileTransfer">파일 전송</button>
+            <button id="fileDelete">파일 삭제</button>
+        </div>
+    </div>
+</div>
+<input id="fileAddInput" type="file" style="display:none;" multiple>
 </body>
-<script src="/js/file.js"></script>
+<script src="/js/file.js" defer></script>
+<script src="/js/common.js"></script>
 </html>
