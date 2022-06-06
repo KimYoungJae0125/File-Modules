@@ -1,5 +1,4 @@
-const commonUtils = {
-    Element: {
+const Element = {
         getById: function(elementId) {
             return document.getElementById(elementId);
         }
@@ -18,13 +17,22 @@ const commonUtils = {
       , createInput: function() {
             return document.createElement("input");
         }
-    }
-  , Event: {
+      , addClass: function(element, className) {
+            element.classList.add(className);
+        }
+      , getInputInElement: function(element) {
+            return element.getElementsByTagName("input")
+        }
+      , inputCheck: function(element, index) {
+            element.checked = !element.checked;
+        }
+}
+const Event = {
         add: function(element, type, func) {
             element.addEventListener(type, func);
         }
-    }
-  , Transfer: {
+}
+const Transfer = {
         ajax: function(requestUrl, httpMethod){
             const xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
@@ -37,5 +45,4 @@ const commonUtils = {
             xhr.open(httpMethod, requestUrl);
             xhr.send();
         }
-    }
 }
