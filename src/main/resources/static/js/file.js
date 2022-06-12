@@ -43,7 +43,7 @@ const fileEvent = {
         console.log(Element.getById("fileAddInput").files);
     }
   , Transfer: function() {
-        Transfer.ajax("/test", "GET");
+        Transfer.multipartRequest("/files", "POST", Element.getById("fileAddInput").files);
     }
   , Click: function(event) {
     console.log(event);

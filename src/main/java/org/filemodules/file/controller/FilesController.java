@@ -1,6 +1,7 @@
 package org.filemodules.file.controller;
 
-import org.filemodules.file.service.FileService;
+import org.filemodules.file.model.dto.FilesDto;
+import org.filemodules.file.service.FilesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,26 +11,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("/file")
-public class FileController {
+@RequestMapping("/files")
+public class FilesController {
 
-    private final FileService fileService;
+    private final FilesService fileService;
 
     @Autowired
-    public FileController(FileService fileService) {
+    public FilesController(FilesService fileService) {
         this.fileService = fileService;
     }
 
-    @GetMapping("/test")
+    @GetMapping
     public String test(){
 
         System.out.println("통신 테스트");
         return "Hello";
     }
 
-    @PostMapping("/upload")
-    public void fileUpload(HttpServletRequest request) {
-        fileService.fileUpload(request);
+    @PostMapping
+    public void fileUpload(FilesDto filesDto) {
+        fileService.fileUpload(filesDto);
 
     }
 
