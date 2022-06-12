@@ -5,3 +5,21 @@ spring:
    thymeleaf:
      prefix: classpath:templates/views
      cache: false
+   datasource:
+     url: jdbc:mysql://localhost:3306/<DB>
+     driverClassName: com.mysql.cj.jdbc.Driver
+     username: <userName>
+     password: <password>
+   jpa:
+     database-platform: org.hibernate.dialect.MariaDB103Dialect
+     properties:
+       hibernate:
+         show-sql: true
+         format_sql: true
+
+
+
+file:
+  directory:
+    window:
+    mac:

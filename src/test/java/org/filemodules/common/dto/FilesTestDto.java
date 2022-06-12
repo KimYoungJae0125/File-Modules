@@ -1,0 +1,47 @@
+package org.filemodules.common.dto;
+
+import org.filemodules.common.response.ResponseMessage;
+import org.filemodules.common.util.FilesTestUtils;
+import org.filemodules.file.model.dto.FilesDto;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+import static java.time.LocalDateTime.now;
+
+public class FilesTestDto {
+
+    private FilesTestUtils filesUtils = new FilesTestUtils();
+
+    public FilesDto createNormalDto(){
+        filesUtils.createDirectory();
+        ResponseMessage fileMessage = filesUtils.createFile();
+
+        Path filePath = (Path) fileMessage.getData();
+        String fileName = "";
+        String mimeType = "";
+        String extension = "";
+        Long fileSize = 0L;
+        try {
+            fileName = String.valueOf(filePath.getFileName());
+            extension = fileName.substring(fileName.lastIndexOf(".")+1, fileName.length());
+            mimeType = Files.probeContentType(filePath);
+            fileSize = Files.size(filePath);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return FilesDto.builder()
+                       .name(fileName)
+                       .extension(extension)
+                       .mimeType(mimeType)
+                       .size(fileSize)
+                       .physicalPath(String.valueOf(filePath))
+                       .lastModifiedDate(now())
+                       .build();
+
+
+    }
+
+}
