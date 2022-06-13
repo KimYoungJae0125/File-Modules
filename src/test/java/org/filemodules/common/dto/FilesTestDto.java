@@ -7,6 +7,7 @@ import org.filemodules.file.model.dto.FilesDto;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.UUID;
 
 import static java.time.LocalDateTime.now;
 
@@ -33,7 +34,8 @@ public class FilesTestDto {
         }
 
         return FilesDto.builder()
-                       .name(fileName)
+                       .originalName(fileName)
+                       .storedName(String.valueOf(UUID.randomUUID()).substring(0, 8) + "." + extension)
                        .extension(extension)
                        .mimeType(mimeType)
                        .size(fileSize)

@@ -8,7 +8,8 @@ import java.time.LocalDateTime;
 @Getter @Setter @Builder
 public class FilesDto {
 
-    private String name;
+    private String originalName;
+    private String storedName;
     private String extension;
     private String mimeType;
     private Long size;

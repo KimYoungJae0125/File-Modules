@@ -1,5 +1,6 @@
 package org.filemodules.unit;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.filemodules.common.dto.FilesTestDto;
 import org.filemodules.common.util.FilesTestUtils;
 import org.filemodules.file.model.dto.FilesDto;
@@ -8,6 +9,7 @@ import org.filemodules.file.repository.FilesRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -24,6 +26,8 @@ public class FilesTest {
 
     @Autowired
     private FilesRepository filesRepository;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @BeforeEach
     void setUp() {
@@ -37,21 +41,12 @@ public class FilesTest {
 
         assertThat(fileDto.getExtension(), is("txt"));
         assertThat(fileDto.getMimeType(), is("text/plain"));
-        assertThat(fileDto.getName(), is("test.txt"));
+        assertThat(fileDto.getOriginalName(), is("test.txt"));
 
-        Files files = Files.builder()
-                            .originalName(fileDto.getName())
-                            .storedName(String.valueOf(UUID.randomUUID()).substring(0, 8) + "." + fileDto.getExtension())
-                            .extension(fileDto.getExtension())
-                            .size(fileDto.getSize())
-                            .physicalPath(fileDto.getPhysicalPath())
-                            .lastModifiedDate(fileDto.getLastModifiedDate())
-                            .lastModified(fileDto.getLastModified())
-                            .mimeType(fileDto.getMimeType())
-                            .build();
+
+        Files files = modelMapper.map(fileDto, Files.class);
 
         filesRepository.save(files);
-
     }
 
 }
