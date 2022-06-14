@@ -1,8 +1,11 @@
 package org.filemodules.common.dto;
 
+import lombok.RequiredArgsConstructor;
 import org.filemodules.common.response.ResponseMessage;
 import org.filemodules.common.util.FilesTestUtils;
 import org.filemodules.file.model.dto.FilesDto;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,9 +14,14 @@ import java.util.UUID;
 
 import static java.time.LocalDateTime.now;
 
+@Component
 public class FilesTestDto {
 
-    private FilesTestUtils filesUtils = new FilesTestUtils();
+    private final FilesTestUtils filesUtils;
+
+    public FilesTestDto(FilesTestUtils filesUtils){
+        this.filesUtils =  filesUtils;
+    }
 
     public FilesDto createNormalDto(){
         filesUtils.createDirectory();
@@ -32,6 +40,8 @@ public class FilesTestDto {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        System.out.println(fileMessage.getDescription());
 
         return FilesDto.builder()
                        .originalName(fileName)

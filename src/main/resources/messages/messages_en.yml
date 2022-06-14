@@ -1,0 +1,18 @@
+directory:
+  create:
+    success: "Success CreateDirectory"
+    fail: "Fail CreateDirectory By AccessDenied"
+  delete:
+    success: "Success DeleteDirectory"
+    fail:
+      notFound: "Fail DeleteDirectory by NotFound"
+      server: "Fail DeleteDirectory by Server"
+file:
+  create:
+    success: "Success CreateFile"
+    fail: "Fail CreateFile By AccessDenied"
+  delete:
+    success: "Success DeleteFile"
+    fail:
+      notFound: "Fail DeleteFile by NotFound"
+      server: "Fail DeleteFile by Server"

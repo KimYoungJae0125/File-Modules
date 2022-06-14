@@ -21,8 +21,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class FilesTest {
-    private FilesTestUtils filesUtils = new FilesTestUtils();
-    private FilesTestDto filesDto = new FilesTestDto();
+    @Autowired
+    private FilesTestUtils filesUtils;
+    @Autowired
+    private FilesTestDto filesDto;
 
     @Autowired
     private FilesRepository filesRepository;

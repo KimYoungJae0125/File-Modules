@@ -1,21 +1,26 @@
 spring:
-   devtools:
+  main:
+    allow-bean-definition-overriding: true
+  devtools:
      livereload:
        enabled: true
-   thymeleaf:
+  thymeleaf:
      prefix: classpath:templates/views
      cache: false
-   datasource:
-     url: jdbc:mysql://localhost:3306/<DB>
+  datasource:
+     url: jdbc:mysql://<DBHOST>:<DBPORT>/<DB명>
      driverClassName: com.mysql.cj.jdbc.Driver
      username: <userName>
      password: <password>
-   jpa:
+  jpa:
      database-platform: org.hibernate.dialect.MariaDB103Dialect
      properties:
        hibernate:
          show-sql: true
          format_sql: true
+  messages:
+     basename: messages/messages
+     encoding: UTF-8
 
 
 

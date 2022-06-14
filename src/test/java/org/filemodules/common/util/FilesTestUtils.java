@@ -1,7 +1,13 @@
 package org.filemodules.common.util;
 
+import lombok.RequiredArgsConstructor;
 import org.filemodules.common.response.ResponseMessage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -10,49 +16,56 @@ import java.nio.file.Files;
 
 import static java.time.LocalDateTime.now;
 
+@Component
 public class FilesTestUtils {
+
+    private MessageSource messageSource;
+
+    public FilesTestUtils(MessageSource messageSource){
+        this.messageSource = messageSource;
+    }
 
     public ResponseMessage createDirectory() {
         Path directoryPath = directoryPath();
         HttpStatus status = null;
-        String description = "";
+        String messageKey = "";
         try {
             if(!Files.isDirectory(directoryPath)){
                 Files.createDirectories(directoryPath);
             }
             status = HttpStatus.CREATED;
-            description = "success createDirectory";
+            messageKey = "directory.create.success";
         } catch (IOException e) {
             status = HttpStatus.FORBIDDEN;
-            description = "Fail createDirectory By AccessDenied";
+            messageKey = "directory.create.fail";
         }
         return ResponseMessage.builder()
                            .transactionTime(now())
                            .statusCode(status.value())
                            .responseMessage(status.getReasonPhrase())
-                           .description(description)
+                           .description(getMessage(messageKey))
                            .data(directoryPath)
                            .build();
     }
     public ResponseMessage createFile() {
         Path filePath = filePath();
         HttpStatus status = null;
-        String description = "";
+        String messageKey = "";
         try {
             if(!Files.exists(filePath)){
                 Files.createFile(filePath);
             }
             status = HttpStatus.CREATED;
-            description = "Success createFile";
+            messageKey = "file.create.success";
         } catch (IOException e) {
             status = HttpStatus.FORBIDDEN;
-            description = "Fail createFile By AccessDenied";
+            messageKey = "file.create.fail";
         }
         return ResponseMessage.builder()
                            .transactionTime(now())
                            .statusCode(status.value())
                            .responseMessage(status.getReasonPhrase())
-                           .description(description)
+                           .description(getMessage(messageKey))
                            .data(filePath)
                            .build();
     }
@@ -60,50 +73,50 @@ public class FilesTestUtils {
     public ResponseMessage deleteFile() {
         Path filePath = filePath();
         HttpStatus status = null;
-        String description = "";
+        String messageKey = "";
         try {
             if(Files.deleteIfExists(filePath)){
                 status = HttpStatus.OK;
-                description = "Success deleteFile";
+                messageKey = "file.delete.success";
             } else {
                 status = HttpStatus.NOT_FOUND;
-                description = "Fail deleteFile by NotFound";
+                messageKey = "file.delete.fail.notFound";
             }
         } catch (IOException e) {
             status = HttpStatus.SERVICE_UNAVAILABLE;
-            description = "Fail deleteFile by Server";
+            messageKey = "file.delete.fail.server";
         }
 
         return ResponseMessage.builder()
                               .transactionTime(now())
                               .statusCode(status.value())
                               .responseMessage(status.getReasonPhrase())
-                              .description(description)
+                              .description(getMessage(messageKey))
                               .data(filePath)
                               .build();
     }
     public ResponseMessage deleteDirectory() {
         Path directoryPath = directoryPath();
         HttpStatus status = null;
-        String description = "";
+        String messageKey = "";
         try {
             if (Files.deleteIfExists(directoryPath)) {
                 status = HttpStatus.OK;
-                description = "Success deletDirectory";
+                messageKey = "directory.delete.success";
             } else {
                 status = HttpStatus.NOT_FOUND;
-                description = "Fail deleteFile by NotFound";
+                messageKey = "directory.delete.fail.notFound";
             }
         } catch (IOException e) {
             status = HttpStatus.SERVICE_UNAVAILABLE;
-            description = "Fail deleteFile by Server";
+            messageKey = "directory.delete.fail.server";
         }
 
         return ResponseMessage.builder()
                               .transactionTime(now())
                               .statusCode(status.value())
                               .responseMessage(status.getReasonPhrase())
-                              .description(description)
+                              .description(getMessage(messageKey))
                               .data(directoryPath)
                               .build();
     }
@@ -121,6 +134,14 @@ public class FilesTestUtils {
 
     public Path getFilePath() {
         return filePath();
+    }
+
+    private String getMessage(String key){
+        return getMessage(key, null);
+    }
+
+    private String getMessage(String key, Object[] args){
+        return messageSource.getMessage(key, args, LocaleContextHolder.getLocale());
     }
 
 }
