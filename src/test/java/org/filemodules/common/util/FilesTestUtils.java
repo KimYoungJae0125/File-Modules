@@ -1,22 +1,17 @@
 package org.filemodules.common.util;
 
-import lombok.RequiredArgsConstructor;
 import org.filemodules.common.response.ResponseMessage;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.Files;
 
 import static java.time.LocalDateTime.now;
 
-@Component
 public class FilesTestUtils {
 
     private MessageSource messageSource;

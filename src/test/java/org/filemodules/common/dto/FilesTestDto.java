@@ -1,11 +1,8 @@
 package org.filemodules.common.dto;
 
-import lombok.RequiredArgsConstructor;
 import org.filemodules.common.response.ResponseMessage;
 import org.filemodules.common.util.FilesTestUtils;
 import org.filemodules.file.model.dto.FilesDto;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,7 +11,6 @@ import java.util.UUID;
 
 import static java.time.LocalDateTime.now;
 
-@Component
 public class FilesTestDto {
 
     private final FilesTestUtils filesUtils;
